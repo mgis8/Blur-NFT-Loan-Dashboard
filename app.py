@@ -42,7 +42,7 @@ with app.app_context():
 # Route to serve the HTML form
 @app.route('/')
 def index():
-    return render_template('frontend.html')
+    return render_template('index.html')
 
 
 global min_apy 
