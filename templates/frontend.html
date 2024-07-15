@@ -22,7 +22,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             padding: 2rem;
-            max-width: 400px;
+            max-width: 600px;
             width: 100%;
             text-align: center;
         }
@@ -44,6 +44,36 @@
             display: flex;
             justify-content: space-around;
         }
+
+      
+        .nft-container {
+    flex: 1;
+    max-height: 130px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 1rem;
+}
+
+.nft-item {
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 0.3rem;
+    margin-bottom: 0.3rem;
+    font-size: 0.9rem;
+}
+
+.nft-item h3 {
+    margin: 0 0 0.5rem 0;
+    font-size: 1rem;
+}
+
+.nft-item p {
+    margin: 0.2rem 0;
+}
+
+
+    
 
         .input-group {
             margin-bottom: 1rem;
@@ -75,7 +105,7 @@
         .btn-group {
             display: flex;
             justify-content: space-evenly;
-            margin-top: .2rem;
+            margin-top: .4rem;
         }
 
         .btn {
@@ -103,15 +133,35 @@
             background-color: #dc3545;
         }
 
+        .form-container, .nft-container {
+    flex: 1;
+    min-width: 0; /* Allows flex items to shrink below content size */
+}
+
+.form-container {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    padding: 1rem;
+}
+
         .btn.kill:hover {
             background-color: #c82333;
         }
 
-        
+
     </style>
-    <script>
-        // JavaScript to prevent negative numbers in input boxes
-        document.addEventListener('DOMContentLoaded', function() {
+
+
+
+
+
+
+   
+
+<script>
+
+// JavaScript to prevent negative numbers in input boxes
+document.addEventListener('DOMContentLoaded', function() {
             const inputs = document.querySelectorAll('input[type="number"]');
             inputs.forEach(input => {
                 input.addEventListener('input', function() {
@@ -121,36 +171,100 @@
                 });
             });
         });
-    </script>
+
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('nftForm');
+    const startButton = document.getElementById('startButton');
+    const nftDataContainer = document.getElementById('nftDataContainer');
+
+    startButton.addEventListener('click', function() {
+        console.log('Start button clicked');
+
+        // Get form data
+        const formData = new FormData(form);
+        const searchParams = new URLSearchParams(formData);
+
+        console.log('Sending request to server');
+        // Send GET request to server
+        fetch(`/submit_form?${searchParams.toString()}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log('Received data from server:', data);
+                // Update GUI with returned NFT data
+                updateNFTDisplay(data.nft_data);
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred while fetching NFT data.');
+            });
+    });
+
+    function updateNFTDisplay(nftData) {
+        console.log('Updating NFT display');
+        // Clear previous data
+        nftDataContainer.innerHTML = '';
+        if (nftData.length > 0){
+        // Create and append new elements for each NFT
+        nftData.forEach(nft => {
+            const nftElement = document.createElement('div');
+            nftElement.classList.add('nft-item');
+            nftElement.innerHTML = `
+                <h3>${nft.name}</h3>
+                <p>ETH: ${nft.eth}</p>
+                <p>LTV: ${nft.ltv}</p>
+                <p>APY: ${nft.apy}</p>
+            `;
+            nftDataContainer.appendChild(nftElement);
+        });}
+        else {alert("No loans matched your query parameters")}
+        console.log('NFT display updated');
+    }
+});
+</script>
+
+
+
 </head>
 <body>
     <div class="container">
         <h1>Set Your Loan Settings</h1>
-        <form action="/submit_form" method="post">
-            <div class="input-group">
-                <label for="input1">Min APY</label>
-                <input type="number" id="input1" name="input1" required>
+        <div class="content-wrapper">
+            <div class="form-container">
+                <form id="nftForm">
+                    <div class="input-group">
+                        <label for="input1">Min APY</label>
+                        <input type="number" id="input1" name="input1" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="input2">Max LTV</label>
+                        <input type="number" id="input2" name="input2" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="input3">Max Eth</label>
+                        <input type="number" id="input3" name="input3" required>
+                    </div>
+                    <div class="input-group">
+                        </div>
+                </form>
             </div>
-            <div class="input-group">
-                <label for="input2">Max LTV</label>
-                <input type="number" id="input2" name="input2" required>
-            </div>
-            <div class="input-group">
-                <label for="input3">Max Eth</label>
-                <input type="number" id="input3" name="input3" required>
-            </div>
-            <div class="input-group">
-                <label for="input4">Update Interval</label>
-                <input type="number" id="input4" name="input4" placeholder="In Min">
-            </div>
-            <div class="btn-container">
-                <div class="btn-group">
-                    <button type="submit" class="btn start">Start</button>
-                    <button type="button" class="btn kill">Kill</button>
+            
+        </div>
+        <div class="btn-container">
+            <div class="btn-group">
+                <button type="submit" class="btn start" id="startButton">Start</button>
                 </div>
-            </div>
-        </form>
+        </div>
+        <div class="nft-container">
+            <div id="loadingIndicator" style="display: none;">Loading NFT data...</div>
+            <div id="nftDataContainer"></div>
+        </div>
     </div>
-   
 </body>
 </html>
+
+
+
+
+
+
+
