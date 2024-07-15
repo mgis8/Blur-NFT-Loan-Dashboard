@@ -88,3 +88,10 @@ def execute_loan_checker(apyThreshold, ltvThreshold, ethThreshold):
 
 
 
+
+
+   
+
+
+
+
