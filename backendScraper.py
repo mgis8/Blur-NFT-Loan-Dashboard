@@ -24,7 +24,7 @@ def execute_loan_checker(apyThreshold, ltvThreshold, ethThreshold):
     del nftData[:] #erases all previous data for next iteration to prevent array growing
 
     #setting path to chrome driver
-    path = "/Users/mgislason/Desktop/chromedriver-mac-arm64/chromedriver"
+    path = "Your/Path"
     service = Service(path)
 
     #Adding options to chrome driver
