@@ -11,6 +11,8 @@ from selenium.webdriver.support import expected_conditions as EC
 
 global nftData
 
+chromedriver_autoinstaller.install()
+
 #formatting for apy and ltv values
 def removePRCNT(string):
     return float(string.replace("%", ""))
@@ -35,7 +37,7 @@ def execute_loan_checker(apyThreshold, ltvThreshold, ethThreshold):
     options.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"); #stops errors with stale elements in headless mode
     options.add_experimental_option("excludeSwitches",["enable-automation"]) #stops annoying chrome message while in non headless
 
-    driver = webdriver.Chrome()#service=service, options=options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), options=options)
     
     #Links to all blur collections that support loans
     collection_links = ["https://blur.io/eth/collection/wrapped-cryptopunks/loans", "https://blur.io/eth/collection/azuki/loans", "https://blur.io/eth/collection/milady/loans", "https://blur.io/eth/collection/degods-eth/loans", "https://blur.io/eth/collection/boredapeyachtclub/loans", "https://blur.io/eth/collection/mutant-ape-yacht-club/loans", "https://blur.io/eth/collection/kanpai-pandas/loans", "https://blur.io/eth/collection/remilio-babies/loans", "https://blur.io/eth/collection/pudgypenguins/loans", "https://blur.io/eth/collection/otherdeed/loans", "https://blur.io/eth/collection/bored-ape-kennel-club/loans", "https://blur.io/eth/collection/clonex/loans", "https://blur.io/eth/collection/beanzofficial/loans", "https://blur.io/eth/collection/azukielementalbeans/loans", "https://blur.io/eth/collection/azukielementals/loans", "https://blur.io/eth/collection/proof-moonbirds/loans", "https://blur.io/eth/collection/lilpudgys/loans"] 
