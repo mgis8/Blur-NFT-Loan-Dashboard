@@ -10,3 +10,29 @@ Instead, my program displays all loans on auction that meet their risk and profi
 
 ### Short Demo Video
 https://github.com/user-attachments/assets/7736c57e-1aa9-400b-9938-47cd77b65d07
+
+### Installation/Running Project
+> Install machine compatible chromedriver :
+https://developer.chrome.com/docs/chromedriver/downloads
+
+> Install python :
+https://www.python.org/downloads/
+
+> Install python requirements :
+https://github.com/mgis8/Blur-NFT-Loan-Dashboard/blob/main/requirements.txt
+
+> Organize project folder :
+  
+&emsp;appfolder/
+
+  &emsp;&emsp;|── backendScraper.py
+
+  &emsp;&emsp;|── app.py
+  
+  &emsp;&emsp;|── templates/
+  
+  &emsp;&emsp;&emsp;└── index.html
+
+> Change path var in backendScraper.py to your path to chromedriver
+
+
