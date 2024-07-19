@@ -4,16 +4,6 @@ import threading
 from flask_sqlalchemy import SQLAlchemy
 
 
-#IMPLEMENTS
-#filter output by apy
-
-
-#possibly add link to collection in idvdl display
-#remove unesc print statements
-#add error handlings
-#add comments
-
-
 #formatting for apy and ltv values
 def removePRCNT(string):
     return float(string.replace("%", ""))
